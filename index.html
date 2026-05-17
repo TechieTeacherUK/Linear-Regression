@@ -142,17 +142,34 @@
                     <i class="fa-solid fa-play text-indigo-600"></i>
                     Video Guide: Correlation & Regression Lines
                 </h3>
-                <div class="w-full aspect-video overflow-hidden rounded-2xl shadow-lg border border-slate-150">
-                    <iframe
-                        class="w-full h-full"
-                        src="https://www.youtube-nocookie.com/embed/upseC-rZ5QI"
-                        title="Correlation and Regression Lines - Year 1 Statistics [A-level]"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="mt-6 p-5 bg-indigo-50/50 rounded-2xl border border-indigo-100/50 space-y-3">
+
+                <!-- Thumbnail click-to-open panel (works in all environments) -->
+                <a href="https://www.youtube.com/watch?v=upseC-rZ5QI" target="_blank" rel="noopener noreferrer"
+                   class="group block w-full relative rounded-2xl overflow-hidden shadow-lg border border-slate-200 cursor-pointer"
+                   style="aspect-ratio: 16/9; background: #0f0f0f;">
+                    <!-- YouTube thumbnail (hqdefault always exists) -->
+                    <img
+                        src="https://img.youtube.com/vi/upseC-rZ5QI/hqdefault.jpg"
+                        alt="Correlation and Regression Lines – A-level Year 1 Statistics"
+                        class="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity duration-200"
+                        onerror="this.style.display='none'"
+                    >
+                    <!-- Play button overlay -->
+                    <div class="absolute inset-0 flex flex-col items-center justify-center gap-3">
+                        <div class="w-20 h-20 bg-red-600 group-hover:bg-red-500 rounded-full flex items-center justify-center shadow-2xl transition-colors duration-200">
+                            <i class="fa-solid fa-play text-white text-3xl ml-1.5"></i>
+                        </div>
+                        <div class="bg-black/60 text-white text-sm font-semibold px-4 py-1.5 rounded-full flex items-center gap-2">
+                            <i class="fa-brands fa-youtube text-red-500"></i>
+                            Open on YouTube
+                        </div>
+                    </div>
+                </a>
+                <p class="text-xs text-slate-400 mt-2 text-center">
+                    Opens in a new tab &nbsp;·&nbsp; <strong class="text-slate-500">1st Class Maths</strong> &nbsp;·&nbsp; ~10 min
+                </p>
+
+                <div class="mt-5 p-5 bg-indigo-50/50 rounded-2xl border border-indigo-100/50 space-y-3">
                     <h4 class="font-bold text-indigo-950 text-sm">What this video covers:</h4>
                     <ul class="text-xs text-slate-600 space-y-2 list-none pl-1">
                         <li class="flex items-start gap-1.5">
@@ -168,9 +185,6 @@
                             <span><strong>Least Squares Conception:</strong> Visualizing how minimizing squared residuals creates our optimal line of best fit.</span>
                         </li>
                     </ul>
-                    <p class="text-[10px] text-slate-400 mt-2">
-                        Video lesson content provided by <strong class="text-slate-500">1st Class Maths</strong>.
-                    </p>
                 </div>
             </div>
         </div>
