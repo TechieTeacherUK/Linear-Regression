@@ -3,35 +3,974 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linear Regression</title>
+    <title>Edexcel AS Maths: Linear Regression Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+        .latex-rendered {
+            font-family: 'KaTeX_Main', 'Times New Roman', serif;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            color: #666;
-            line-height: 1.6;
+        input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Linear Regression</h1>
-        <p>Welcome to the Linear Regression project.</p>
-    </div>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
+
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-indigo-600 text-white p-2 rounded-lg flex items-center justify-center shadow-md">
+                    <i class="fa-solid fa-chart-line text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Edexcel AS Level Mathematics</h1>
+                    <p class="text-xs text-indigo-600 font-medium">Topic 4.2: Linear Regression & Models</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2 text-sm text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span>Infinite Practice Enabled</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+        <div class="bg-gradient-to-r from-indigo-900 to-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-xl mb-8">
+            <div class="max-w-3xl">
+                <span class="bg-indigo-500/30 text-indigo-300 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider">Online Lecture Companion</span>
+                <h2 class="text-3xl font-extrabold mt-3 tracking-tight">Linear Regression & Straight Line Models</h2>
+                <p class="mt-2 text-base text-indigo-100/90 leading-relaxed">
+                    Master interpreting regression equations, understanding interpolation vs. extrapolation, and handling coded models with this interactive workspace.
+                </p>
+            </div>
+        </div>
+
+        <div class="flex justify-center mb-8">
+            <div class="bg-slate-200/80 p-1.5 rounded-2xl flex flex-wrap w-full max-w-2xl shadow-inner gap-1 sm:gap-0">
+                <button onclick="switchMasterMode('theory')" id="mode-btn-theory" class="flex-1 min-w-[140px] py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-white text-indigo-950 shadow-sm">
+                    <i class="fa-solid fa-book-open"></i> Core Theory
+                </button>
+                <button onclick="switchMasterMode('video')" id="mode-btn-video" class="flex-1 min-w-[140px] py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-600 hover:text-slate-800">
+                    <i class="fa-solid fa-circle-play"></i> Video Tutorial
+                </button>
+                <button onclick="switchMasterMode('practice')" id="mode-btn-practice" class="flex-1 min-w-[140px] py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-600 hover:text-slate-800">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Practice Questions
+                </button>
+            </div>
+        </div>
+
+        <!-- Mode 1: Core Theory -->
+        <div id="master-mode-theory" class="space-y-8 animate-fade-in max-w-4xl mx-auto">
+            <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
+                <h3 class="text-2xl font-bold text-slate-900 flex items-center gap-2 pb-4 border-b border-slate-100">
+                    <i class="fa-solid fa-graduation-cap text-indigo-600"></i>
+                    Key Concepts Explained
+                </h3>
+                <div class="mt-6 space-y-6">
+                    <div class="p-5 bg-slate-50 rounded-2xl border border-slate-150">
+                        <h4 class="font-bold text-slate-900 text-base flex items-center gap-2 mb-3">
+                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                            The Regression Equation: $y = a + bx$
+                        </h4>
+                        <ul class="text-sm text-slate-600 space-y-2.5 pl-1">
+                            <li class="flex items-start gap-1.5">
+                                <span class="text-indigo-600 font-bold mt-0.5">•</span>
+                                <span><strong>$x$ (Independent/Explanatory):</strong> The variable you control, select, or change. Plotted on the bottom horizontal axis.</span>
+                            </li>
+                            <li class="flex items-start gap-1.5">
+                                <span class="text-indigo-600 font-bold mt-0.5">•</span>
+                                <span><strong>$y$ (Dependent/Response):</strong> The variable you measure as a response. Plotted on the vertical side axis.</span>
+                            </li>
+                            <li class="flex items-start gap-1.5">
+                                <span class="text-indigo-600 font-bold mt-0.5">•</span>
+                                <span><strong>Intercept ($a$):</strong> The starting value of $y$ when $x = 0$.</span>
+                            </li>
+                            <li class="flex items-start gap-1.5">
+                                <span class="text-indigo-600 font-bold mt-0.5">•</span>
+                                <span><strong>Gradient ($b$):</strong> The rate of change. It tells you exactly how much $y$ increases (or decreases, if negative) for every single unit increase of $x$.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="p-5 bg-slate-50 rounded-2xl border border-slate-150">
+                        <h4 class="font-bold text-slate-900 text-base flex items-center gap-2 mb-3">
+                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                            Interpolation vs. Extrapolation
+                        </h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            <strong>Interpolation</strong> means predicting a value inside your collected data range. Because we have data representing this interval, it is generally considered <strong>reliable</strong>.
+                        </p>
+                        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                            <strong>Extrapolation</strong> means predicting outside the collected data range. This is highly <strong>unreliable</strong> because you cannot prove the linear trend will continue beyond the original boundaries.
+                        </p>
+                    </div>
+
+                    <div class="p-5 bg-slate-50 rounded-2xl border border-slate-150">
+                        <h4 class="font-bold text-slate-900 text-base flex items-center gap-2 mb-3">
+                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                            Direction of Prediction Rule
+                        </h4>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            A regression line of <strong>$y$</strong> on <strong>$x$</strong> is specially calculated to predict $y$ when you are given $x$. It does this by making the vertical distances (errors in $y$) between the real points and the line as small as possible.
+                        </p>
+                        <div class="mt-3 p-3.5 bg-indigo-50 rounded-xl border border-indigo-100 space-y-2">
+                            <p class="text-xs font-semibold text-indigo-900 flex items-center gap-1">
+                                <i class="fa-solid fa-circle-question text-indigo-600"></i> Why can't we rearrange the formula to find $x$?
+                            </p>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                If you wanted to predict $x$ from $y$, you would need to minimize horizontal errors instead. That requires a completely different line (called the <strong>$x$</strong> on <strong>$y$</strong> line).
+                            </p>
+                        </div>
+                        <p class="text-xs text-red-600 font-semibold mt-3 flex items-center gap-1.5">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Do not rearrange the $y = a + bx$ equation algebraically to find $x$. Doing so will result in mathematically incorrect and highly inaccurate predictions!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mode 2: Video Tutorial -->
+        <div id="master-mode-video" class="hidden space-y-8 animate-fade-in max-w-4xl mx-auto">
+            <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
+                <h3 class="text-2xl font-bold text-slate-900 flex items-center gap-2 pb-4 border-b border-slate-100 mb-6">
+                    <i class="fa-solid fa-play text-indigo-600"></i>
+                    Video Guide: Correlation & Regression Lines
+                </h3>
+                <div class="w-full aspect-video overflow-hidden rounded-2xl shadow-lg border border-slate-150">
+                    <iframe
+                        class="w-full h-full"
+                        src="https://www.youtube-nocookie.com/embed/upseC-rZ5QI"
+                        title="Correlation and Regression Lines - Year 1 Statistics [A-level]"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="mt-6 p-5 bg-indigo-50/50 rounded-2xl border border-indigo-100/50 space-y-3">
+                    <h4 class="font-bold text-indigo-950 text-sm">What this video covers:</h4>
+                    <ul class="text-xs text-slate-600 space-y-2 list-none pl-1">
+                        <li class="flex items-start gap-1.5">
+                            <span class="text-indigo-600 font-bold">•</span>
+                            <span><strong>Exploratory vs Response Variables:</strong> Placing explanatory/independent factors on the horizontal axis and responses on the vertical axis.</span>
+                        </li>
+                        <li class="flex items-start gap-1.5">
+                            <span class="text-indigo-600 font-bold">•</span>
+                            <span><strong>Causation Warning:</strong> Why correlation does not imply a direct causal relationship.</span>
+                        </li>
+                        <li class="flex items-start gap-1.5">
+                            <span class="text-indigo-600 font-bold">•</span>
+                            <span><strong>Least Squares Conception:</strong> Visualizing how minimizing squared residuals creates our optimal line of best fit.</span>
+                        </li>
+                    </ul>
+                    <p class="text-[10px] text-slate-400 mt-2">
+                        Video lesson content provided by <strong class="text-slate-500">1st Class Maths</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mode 3: Practice -->
+        <div id="master-mode-practice" class="hidden space-y-8 animate-fade-in">
+            <div class="max-w-4xl mx-auto space-y-8">
+
+                <div class="bg-white border border-slate-200 p-1.5 rounded-2xl flex flex-wrap gap-1 shadow-sm">
+                    <button onclick="switchTab(1)" id="tab-btn-1" class="flex-1 min-w-[120px] text-sm py-2.5 px-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 bg-indigo-600 text-white shadow-sm">
+                        <i class="fa-solid fa-car"></i> Ex 1: Interpret
+                    </button>
+                    <button onclick="switchTab(2)" id="tab-btn-2" class="flex-1 min-w-[120px] text-sm py-2.5 px-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-slate-600 hover:bg-slate-50">
+                        <i class="fa-solid fa-cloud-sun"></i> Ex 2: Sunshine
+                    </button>
+                    <button onclick="switchTab(3)" id="tab-btn-3" class="flex-1 min-w-[120px] text-sm py-2.5 px-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-slate-600 hover:bg-slate-50">
+                        <i class="fa-solid fa-key"></i> Ex 3: Coding
+                    </button>
+                    <button onclick="switchTab(4)" id="tab-btn-4" class="flex-1 min-w-[120px] text-sm py-2.5 px-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-slate-600 hover:bg-slate-50">
+                        <i class="fa-solid fa-circle-check"></i> Ex 4: Validity
+                    </button>
+                </div>
+
+                <!-- ==================== TAB 1 ==================== -->
+                <div id="tab-content-1" class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="flex justify-between items-start gap-4 pb-4 border-b border-slate-100">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Example 1 Variant</span>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1">Interpreting Real-world Intercepts & Gradients</h3>
+                        </div>
+                        <button onclick="generateQ1()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-2 px-4 rounded-xl transition duration-200 text-xs flex items-center gap-1.5 border border-indigo-100">
+                            <i class="fa-solid fa-arrows-rotate"></i> New Values
+                        </button>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-100 p-5 rounded-2xl">
+                        <p class="text-base text-slate-700 leading-relaxed">
+                            A business researcher models the relationship between the age of a commercial <span class="font-semibold text-slate-900" id="q1-item">delivery van</span>, <span class="italic text-slate-900 font-medium">x</span> years, and its resale value, <span class="italic text-slate-900 font-medium">y</span> pounds (£).
+                        </p>
+                        <p class="text-base text-slate-700 leading-relaxed mt-2.5">
+                            The least squares regression line equation is calculated as:
+                        </p>
+                        <div class="my-4 text-center bg-white border border-slate-200 py-3 px-5 rounded-xl shadow-sm inline-block mx-auto">
+                            <span class="text-xl font-extrabold text-indigo-900 font-serif" id="q1-equation">y = 28500 - 2400x</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Part A -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-800">
+                                (a) What is the estimated starting value of the <span class="q1-item-label font-semibold">delivery van</span> when it is brand new?
+                            </label>
+                            <div class="flex items-center gap-2 max-w-sm">
+                                <span class="text-slate-500 font-semibold">£</span>
+                                <input type="number" id="q1-ans-a" placeholder="Enter number..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2 text-sm font-semibold transition duration-200">
+                            </div>
+                        </div>
+
+                        <!-- Part B — FIX: was hardcoded "vehicle", now uses dynamic span -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-800">
+                                (b) By how much money does the <span class="q1-item-label font-semibold">delivery van</span>'s value decrease for each additional year of age?
+                            </label>
+                            <div class="flex items-center gap-2 max-w-sm">
+                                <span class="text-slate-500 font-semibold">£</span>
+                                <input type="number" id="q1-ans-b" placeholder="Enter positive decrease..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2 text-sm font-semibold transition duration-200">
+                            </div>
+                        </div>
+
+                        <div class="pt-4 flex items-center gap-3">
+                            <button onclick="checkQ1()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-xl transition duration-200 text-sm shadow-md shadow-emerald-600/10">
+                                Submit Answers
+                            </button>
+                            <button onclick="revealQ1Solution()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-6 rounded-xl transition duration-200 text-sm">
+                                Show Full Solution
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="q1-status" class="hidden p-4 rounded-xl border"></div>
+
+                    <div id="q1-solution" class="hidden bg-indigo-50 border border-indigo-100 p-6 rounded-2xl space-y-4">
+                        <h4 class="font-bold text-indigo-900 text-base border-b border-indigo-200/50 pb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                            Step-by-Step Breakdown
+                        </h4>
+                        <div class="text-sm text-indigo-950 space-y-3 leading-relaxed">
+                            <p>
+                                <strong>Understanding the Model:</strong> The equation is in the form $y = a + bx$, where $y$ is the value in pounds, and $x$ is the age in years.
+                            </p>
+                            <p>
+                                <strong>(a) The intercept ($a$):</strong> When the vehicle is brand new, its age $x = 0$. Substituting $x = 0$ into the equation yields:
+                                <br><span class="block my-2 font-mono bg-white/60 p-2 rounded text-center text-slate-800 font-bold" id="q1-sol-a-expr">y = 28500 - 2400(0) = £28,500</span>
+                                Therefore, the brand new starting value is exactly the intercept term: <strong>£<span id="q1-sol-a-val">28500</span></strong>.
+                            </p>
+                            <p>
+                                <strong>(b) The gradient ($b$):</strong> The coefficient of $x$ is $-<span id="q1-sol-b-raw">2400</span>$. The negative sign represents a <em>decrease</em>. For every unit step increase in $x$ (every additional year), $y$ decreases by exactly <strong>£<span id="q1-sol-b-val">2400</span></strong>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== TAB 2 ==================== -->
+                <div id="tab-content-2" class="hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="flex justify-between items-start gap-4 pb-4 border-b border-slate-100">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Example 2 Variant</span>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1">Predictions & Large Data Set Boundaries</h3>
+                        </div>
+                        <button onclick="generateQ2()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-2 px-4 rounded-xl transition duration-200 text-xs flex items-center gap-1.5 border border-indigo-100">
+                            <i class="fa-solid fa-arrows-rotate"></i> New Values
+                        </button>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-100 p-5 rounded-2xl">
+                        <p class="text-base text-slate-700 leading-relaxed">
+                            A student uses records from the <span class="font-semibold text-slate-900">Large Data Set</span> to investigate daily mean temperature, $t\text{ °C}$, and daily total sunshine, $s\text{ hours}$, at an overseas location.
+                        </p>
+                        <p class="text-base text-slate-700 leading-relaxed mt-2.5">
+                            The original data only contains days where the temperature ranges between <strong class="text-indigo-900"><span id="q2-temp-low">5</span>°C</strong> and <strong class="text-indigo-900"><span id="q2-temp-high">22</span>°C</strong>.
+                        </p>
+                        <p class="text-base text-slate-700 leading-relaxed mt-2">
+                            The calculated regression line equation of $s$ on $t$ is:
+                        </p>
+                        <div class="my-4 text-center bg-white border border-slate-200 py-3 px-5 rounded-xl shadow-sm inline-block mx-auto">
+                            <span class="text-xl font-extrabold text-indigo-900 font-serif" id="q2-equation">s = -2.1 + 0.58t</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Part A -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-800">
+                                (a) Use the equation to estimate the hours of sunshine on a day with temperature <span id="q2-pred-temp" class="font-bold text-indigo-600">12</span>°C. (Give to 2 decimal places)
+                            </label>
+                            <div class="flex items-center gap-2 max-w-sm">
+                                <input type="number" step="0.01" id="q2-ans-a" placeholder="Enter answer..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2 text-sm font-semibold transition duration-200">
+                                <span class="text-slate-500 font-semibold text-sm">hours</span>
+                            </div>
+                        </div>
+
+                        <!-- Part B -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-800">
+                                (b) Is this estimate in part (a) reliable or unreliable? Why?
+                            </label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl">
+                                <label class="border border-slate-200 rounded-xl p-3 flex items-start gap-2.5 hover:bg-slate-50 cursor-pointer transition">
+                                    <input type="radio" name="q2-radio-b" value="reliable-inter" class="mt-1">
+                                    <span class="text-xs text-slate-700 font-medium"><strong>Reliable</strong>, because it represents <strong>interpolation</strong> within the collected temperature range.</span>
+                                </label>
+                                <label class="border border-slate-200 rounded-xl p-3 flex items-start gap-2.5 hover:bg-slate-50 cursor-pointer transition">
+                                    <input type="radio" name="q2-radio-b" value="unreliable-extra" class="mt-1">
+                                    <span class="text-xs text-slate-700 font-medium"><strong>Unreliable</strong>, because it represents <strong>extrapolation</strong> outside the collected range.</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Part C -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-800">
+                                (c) Explain why the model breaks down mathematically if the temperature is <span id="q2-invalid-temp" class="font-bold text-indigo-600">2</span>°C.
+                            </label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-xl">
+                                <label class="border border-slate-200 rounded-xl p-3 flex items-start gap-2.5 hover:bg-slate-50 cursor-pointer transition">
+                                    <input type="radio" name="q2-radio-c" value="negative-sun" class="mt-1">
+                                    <span class="text-xs text-slate-700 font-medium">It predicts an <strong>impossible negative duration</strong> of sunshine hours.</span>
+                                </label>
+                                <label class="border border-slate-200 rounded-xl p-3 flex items-start gap-2.5 hover:bg-slate-50 cursor-pointer transition">
+                                    <input type="radio" name="q2-radio-c" value="too-hot" class="mt-1">
+                                    <span class="text-xs text-slate-700 font-medium">It estimates more than 24 hours of sunshine, which exceeds a single calendar day.</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Part D -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-800">
+                                (d) Why is it not appropriate to rearrange this equation to estimate temperature when there is <span id="q2-sun-hours" class="font-bold text-indigo-600">8</span> hours of sunshine?
+                            </label>
+                            <div class="grid grid-cols-1 gap-3 max-w-xl">
+                                <label class="border border-slate-200 rounded-xl p-3 flex items-start gap-2.5 hover:bg-slate-50 cursor-pointer transition">
+                                    <input type="radio" name="q2-radio-d" value="not-y-on-x" class="mt-1">
+                                    <span class="text-xs text-slate-700 font-medium">The line is calculated specifically as <strong>$s$</strong> on <strong>$t$</strong> (minimizing errors in $s$ only). Using it to predict $t$ is mathematically invalid. A separate line of <strong>$t$</strong> on <strong>$s$</strong> would be required.</span>
+                                </label>
+                                <label class="border border-slate-200 rounded-xl p-3 flex items-start gap-2.5 hover:bg-slate-50 cursor-pointer transition">
+                                    <input type="radio" name="q2-radio-d" value="sun-is-independent" class="mt-1">
+                                    <span class="text-xs text-slate-700 font-medium">Sunshine hours are dependent on wind speeds and humidity levels, not temperatures.</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 flex items-center gap-3">
+                            <button onclick="checkQ2()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-xl transition duration-200 text-sm shadow-md shadow-emerald-600/10">
+                                Submit Answers
+                            </button>
+                            <button onclick="revealQ2Solution()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-6 rounded-xl transition duration-200 text-sm">
+                                Show Full Solution
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="q2-status" class="hidden p-4 rounded-xl border"></div>
+
+                    <div id="q2-solution" class="hidden bg-indigo-50 border border-indigo-100 p-6 rounded-2xl space-y-4">
+                        <h4 class="font-bold text-indigo-900 text-base border-b border-indigo-200/50 pb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                            Step-by-Step Breakdown
+                        </h4>
+                        <div class="text-sm text-indigo-950 space-y-3 leading-relaxed">
+                            <p>
+                                <strong>(a) Substituting $t = $ <span id="q2-sol-temp-a">12</span>:</strong>
+                                <br><span class="block my-2 font-mono bg-white/60 p-2 rounded text-center text-slate-800 font-bold" id="q2-sol-expr">s = -2.1 + 0.58(12) = 4.86 hours</span>
+                            </p>
+                            <p>
+                                <strong>(b) Interpolation vs Extrapolation:</strong> Since <span id="q2-sol-temp-b">12</span>°C lies fully within the sample data range (<span id="q2-sol-low-b">5</span>°C to <span id="q2-sol-high-b">22</span>°C), this prediction is safe and <strong>reliable</strong>.
+                            </p>
+                            <p>
+                                <strong>(c) Why this temperature fails:</strong> Substituting $t = $ <span id="q2-sol-invalid-temp">2</span> yields:
+                                <br><span class="block my-2 font-mono bg-white/60 p-2 rounded text-center text-slate-800 font-bold" id="q2-sol-invalid-expr">s = -2.1 + 0.58(2) = -0.94 hours</span>
+                                A negative duration of sunshine is a physical impossibility, illustrating the dangers of extrapolation.
+                            </p>
+                            <p>
+                                <strong>(d) Rearrangement Limit:</strong> The least-squares procedure is asymmetric. A regression model designed for the response $s$ given covariate $t$ minimizes squared vertical differences. Swapping the roles algebraically fails to yield the true line of $t$ on $s$.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== TAB 3 ==================== -->
+                <div id="tab-content-3" class="hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="flex justify-between items-start gap-4 pb-4 border-b border-slate-100">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Example 3 Variant</span>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1">Decoding Coded Variables (Plain English)</h3>
+                        </div>
+                        <button onclick="generateQ3()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-2 px-4 rounded-xl transition duration-200 text-xs flex items-center gap-1.5 border border-indigo-100">
+                            <i class="fa-solid fa-arrows-rotate"></i> New Values
+                        </button>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-100 p-5 rounded-2xl">
+                        <p class="text-base text-slate-700 leading-relaxed">
+                            To make extremely large data numbers easier to handle, a statistical package codes raw data variables, $x$ and $y$, into smaller variables, $p$ and $q$, using these formulas:
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 max-w-md mx-auto my-3 text-center">
+                            <div class="bg-white border border-slate-200 py-2 rounded-xl text-lg font-bold text-slate-800" id="q3-code-p">p = x - 4</div>
+                            <div class="bg-white border border-slate-200 py-2 rounded-xl text-lg font-bold text-slate-800" id="q3-code-q">q = y / 20</div>
+                        </div>
+                        <p class="text-base text-slate-700 leading-relaxed mt-2.5">
+                            The regression line for the simplified, coded variables is found to be:
+                        </p>
+                        <div class="my-4 text-center bg-white border border-slate-200 py-3 px-5 rounded-xl shadow-sm inline-block mx-auto">
+                            <span class="text-xl font-extrabold text-indigo-900 font-serif" id="q3-equation">q = 5.4 + 2.1p</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <p class="text-sm font-semibold text-slate-600">
+                            Find the final decoded regression equation of $y$ on $x$. Write your decoded equation in the form: $y = a + bx$.
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label class="block text-sm font-bold text-slate-800">
+                                    Value of the constant intercept term ($a$):
+                                </label>
+                                <input type="number" step="0.1" id="q3-ans-a" placeholder="Enter calculated value..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2 text-sm font-semibold transition duration-200">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="block text-sm font-bold text-slate-800">
+                                    Value of the gradient coefficient ($b$):
+                                </label>
+                                <input type="number" step="0.1" id="q3-ans-b" placeholder="Enter calculated value..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2 text-sm font-semibold transition duration-200">
+                            </div>
+                        </div>
+
+                        <div class="pt-4 flex items-center gap-3">
+                            <button onclick="checkQ3()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-xl transition duration-200 text-sm shadow-md shadow-emerald-600/10">
+                                Submit Answers
+                            </button>
+                            <button onclick="revealQ3Solution()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-6 rounded-xl transition duration-200 text-sm">
+                                Show Full Solution
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="q3-status" class="hidden p-4 rounded-xl border"></div>
+
+                    <div id="q3-solution" class="hidden bg-indigo-50 border border-indigo-100 p-6 rounded-2xl space-y-4">
+                        <h4 class="font-bold text-indigo-900 text-base border-b border-indigo-200/50 pb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                            Step-by-Step Breakdown
+                        </h4>
+                        <div class="text-sm text-indigo-950 space-y-4 leading-relaxed">
+                            <div>
+                                <strong class="text-indigo-900 font-bold">Step 1: Substitute formulas in place of variables</strong>
+                                <p class="mt-1">Replace $q$ with $y \div$ <span class="q3-div-val">20</span> and replace $p$ with $(x -$ <span class="q3-sub-val">4</span>$)$:</p>
+                                <span class="block my-2 font-mono bg-white/60 p-2 rounded text-center text-slate-800 font-bold" id="q3-sol-step1">y / 20 = 5.4 + 2.1(x - 4)</span>
+                            </div>
+                            <div>
+                                <strong class="text-indigo-900 font-bold">Step 2: Isolate the variable $y$</strong>
+                                <p class="mt-1">Multiply all terms on the right side by <span class="q3-div-val">20</span> to remove the fractional denominator:</p>
+                                <span class="block my-2 font-mono bg-white/60 p-2 rounded text-center text-slate-800 font-bold" id="q3-sol-step2">y = 20 × [ 5.4 + 2.1(x - 4) ]</span>
+                                <!-- FIX: this line is now dynamically generated in JS, not hardcoded -->
+                                <p class="text-xs text-indigo-800 font-mono mt-1" id="q3-sol-prod-note">
+                                    Evaluating products: 20 × 5.4 = 108 and 20 × 2.1 = 42.
+                                </p>
+                                <span class="block my-2 font-mono bg-white/60 p-2 rounded text-center text-slate-800 font-bold" id="q3-sol-step3">y = 108 + 42(x - 4)</span>
+                            </div>
+                            <div>
+                                <strong class="text-indigo-900 font-bold">Step 3: Expand brackets and simplify</strong>
+                                <p class="mt-1">Multiply the gradient term through the parenthetical binomial:</p>
+                                <span class="block my-2 font-mono bg-white/60 p-2 rounded text-center text-slate-800 font-bold" id="q3-sol-step4">y = 108 + 42x - 168</span>
+                                <!-- FIX: this combining-constants note is now dynamically generated -->
+                                <p class="mt-1" id="q3-sol-combine-note">Combine constant integers (108 − 168 = −60):</p>
+                                <span class="block my-2 font-mono bg-indigo-600 text-white p-3 rounded text-center font-bold text-lg shadow-sm" id="q3-sol-final">y = -60 + 42x</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== TAB 4 ==================== -->
+                <div id="tab-content-4" class="hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+                    <div class="flex justify-between items-start gap-4 pb-4 border-b border-slate-100">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest">Example 4 Variant</span>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1">Modeling Limits & Intercept Boundaries</h3>
+                        </div>
+                        <button onclick="generateQ4()" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold py-2 px-4 rounded-xl transition duration-200 text-xs flex items-center gap-1.5 border border-indigo-100">
+                            <i class="fa-solid fa-arrows-rotate"></i> New Values
+                        </button>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-100 p-5 rounded-2xl">
+                        <p class="text-base text-slate-700 leading-relaxed">
+                            A community gym is tracking membership metrics. The manager registers the monthly subscription price, $x\text{ pounds}$, and the total active member count, $y$.
+                        </p>
+                        <p class="text-base text-slate-700 leading-relaxed mt-2.5">
+                            Data is gathered strictly from test price structures ranging between <strong class="text-indigo-900">£<span id="q4-low-range">15</span></strong> and <strong class="text-indigo-900">£<span id="q4-high-range">45</span></strong>.
+                        </p>
+                        <p class="text-base text-slate-700 leading-relaxed mt-2">
+                            The calculated regression line is:
+                        </p>
+                        <div class="my-4 text-center bg-white border border-slate-200 py-3 px-5 rounded-xl shadow-sm inline-block mx-auto">
+                            <span class="text-xl font-extrabold text-indigo-900 font-serif" id="q4-equation">y = 650 - 8x</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Part A -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-800">
+                                (a) Predict the member count when monthly dues are set to £<span id="q4-pred-val" class="font-bold text-indigo-600">25</span>:
+                            </label>
+                            <div class="flex items-center gap-2 max-w-sm">
+                                <input type="number" id="q4-ans-a" placeholder="Enter prediction..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2 text-sm font-semibold transition duration-200">
+                                <span class="text-slate-500 font-semibold text-sm">members</span>
+                            </div>
+                        </div>
+
+                        <!-- Part B -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-800">
+                                (b) Select the correct contextual description of the gradient coefficient (<span id="q4-grad-coeff" class="font-semibold text-indigo-600">-8</span>):
+                            </label>
+                            <div class="grid grid-cols-1 gap-3 max-w-xl">
+                                <label class="border border-slate-200 rounded-xl p-3 flex items-start gap-2.5 hover:bg-slate-50 cursor-pointer transition">
+                                    <input type="radio" name="q4-radio-b" value="grad-correct" class="mt-1">
+                                    <span class="text-xs text-slate-700 font-medium">For every <strong>£1 increase</strong> in membership price, the number of active members <strong>decreases by <span id="q4-grad-abs-1">8</span></strong>.</span>
+                                </label>
+                                <label class="border border-slate-200 rounded-xl p-3 flex items-start gap-2.5 hover:bg-slate-50 cursor-pointer transition">
+                                    <input type="radio" name="q4-radio-b" value="grad-wrong" class="mt-1">
+                                    <span class="text-xs text-slate-700 font-medium">For every <strong><span id="q4-grad-abs-2">8</span> pound decrease</strong> in prices, the membership base expands by 1 active person.</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Part C -->
+                        <div class="space-y-2">
+                            <label class="block text-sm font-bold text-slate-800">
+                                (c) Why might the intercept value of <span id="q4-intercept-val" class="font-semibold text-indigo-600">650</span> not be valid in a real-world business context?
+                            </label>
+                            <div class="grid grid-cols-1 gap-3 max-w-xl">
+                                <label class="border border-slate-200 rounded-xl p-3 flex items-start gap-2.5 hover:bg-slate-50 cursor-pointer transition">
+                                    <input type="radio" name="q4-radio-c" value="intercept-correct" class="mt-1">
+                                    <span class="text-xs text-slate-700 font-medium">The price of £0 ($x=0$) is completely outside the tested range of data (£<span id="q4-low-range-sub">15</span> to £<span id="q4-high-range-sub">45</span>). Making predictions here represents unreliable <strong>extrapolation</strong>, and real-world physical capacities or overheads might prevent housing that many free participants.</span>
+                                </label>
+                                <label class="border border-slate-200 rounded-xl p-3 flex items-start gap-2.5 hover:bg-slate-50 cursor-pointer transition">
+                                    <input type="radio" name="q4-radio-c" value="intercept-wrong" class="mt-1">
+                                    <span class="text-xs text-slate-700 font-medium">The intercept is an odd number and business models only permit even pricing limits.</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 flex items-center gap-3">
+                            <button onclick="checkQ4()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-6 rounded-xl transition duration-200 text-sm shadow-md shadow-emerald-600/10">
+                                Submit Answers
+                            </button>
+                            <button onclick="revealQ4Solution()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-6 rounded-xl transition duration-200 text-sm">
+                                Show Full Solution
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="q4-status" class="hidden p-4 rounded-xl border"></div>
+
+                    <div id="q4-solution" class="hidden bg-indigo-50 border border-indigo-100 p-6 rounded-2xl space-y-4">
+                        <h4 class="font-bold text-indigo-900 text-base border-b border-indigo-200/50 pb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                            Step-by-Step Breakdown
+                        </h4>
+                        <div class="text-sm text-indigo-950 space-y-3 leading-relaxed">
+                            <p>
+                                <strong>(a) Membership Prediction:</strong> Plug $x = $ <span id="q4-sol-pred-x">25</span> directly into the linear equation:
+                                <br><span class="block my-2 font-mono bg-white/60 p-2 rounded text-center text-slate-800 font-bold" id="q4-sol-expr">y = 650 - 8(25) = 450 members</span>
+                            </p>
+                            <p>
+                                <strong>(b) Gradient Interpretation:</strong> The gradient is $-$<span id="q4-sol-grad-abs">8</span>. In plain terms, for each additional £1 added to the subscription cost, the customer base drops by <span id="q4-sol-grad-sub">8</span> active people.
+                            </p>
+                            <p>
+                                <strong>(c) Boundary Validity:</strong> A price of $x = 0$ (free access) is far below the lower boundary of the experimental data (£<span id="q4-sol-low">15</span>). This represents extrapolation, which cannot be assumed to remain linear.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function refreshMath() {
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\[', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function switchMasterMode(mode) {
+            ['theory','video','practice'].forEach(m => {
+                document.getElementById(`master-mode-${m}`).classList.add('hidden');
+                document.getElementById(`mode-btn-${m}`).className =
+                    "flex-1 min-w-[140px] py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 text-slate-600 hover:text-slate-800";
+            });
+            document.getElementById(`master-mode-${mode}`).classList.remove('hidden');
+            document.getElementById(`mode-btn-${mode}`).className =
+                "flex-1 min-w-[140px] py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center gap-2 bg-white text-indigo-950 shadow-sm";
+            refreshMath();
+        }
+
+        function switchTab(tabIndex) {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`tab-content-${i}`).classList.toggle('hidden', i !== tabIndex);
+                document.getElementById(`tab-btn-${i}`).className = i === tabIndex
+                    ? "flex-1 min-w-[120px] text-sm py-2.5 px-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 bg-indigo-600 text-white shadow-sm"
+                    : "flex-1 min-w-[120px] text-sm py-2.5 px-3 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-slate-600 hover:bg-slate-50";
+            }
+            refreshMath();
+        }
+
+        let q1Data = {}, q2Data = {}, q3Data = {}, q4Data = {};
+
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        function randomChoice(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        /* ===== EXAMPLE 1 ===== */
+        const q1Items = [
+            "delivery van", "agricultural tractor", "luxury electric car",
+            "refrigerated container truck", "off-road utility vehicle"
+        ];
+
+        function generateQ1() {
+            q1Data.item      = randomChoice(q1Items);
+            q1Data.intercept = randomInt(18, 55) * 1000;
+            q1Data.gradient  = randomInt(12, 45) * 100;
+
+            document.getElementById("q1-item").innerText = q1Data.item;
+            // FIX: update ALL elements with the q1-item-label class (parts a AND b labels)
+            document.querySelectorAll(".q1-item-label").forEach(el => el.innerText = q1Data.item);
+
+            document.getElementById("q1-equation").innerText =
+                `y = ${q1Data.intercept.toLocaleString()} - ${q1Data.gradient.toLocaleString()}x`;
+
+            document.getElementById("q1-ans-a").value = "";
+            document.getElementById("q1-ans-b").value = "";
+            document.getElementById("q1-status").className = "hidden p-4 rounded-xl border";
+            document.getElementById("q1-solution").classList.add("hidden");
+
+            document.getElementById("q1-sol-a-expr").innerText =
+                `y = ${q1Data.intercept.toLocaleString()} - ${q1Data.gradient.toLocaleString()}(0) = £${q1Data.intercept.toLocaleString()}`;
+            document.getElementById("q1-sol-a-val").innerText  = q1Data.intercept.toLocaleString();
+            document.getElementById("q1-sol-b-raw").innerText  = q1Data.gradient.toLocaleString();
+            document.getElementById("q1-sol-b-val").innerText  = q1Data.gradient.toLocaleString();
+            refreshMath();
+        }
+
+        function checkQ1() {
+            const userA     = parseInt(document.getElementById("q1-ans-a").value);
+            const userB     = parseInt(document.getElementById("q1-ans-b").value);
+            const statusBox = document.getElementById("q1-status");
+
+            if (isNaN(userA) || isNaN(userB)) {
+                statusBox.className = "p-4 rounded-xl border bg-yellow-50 border-yellow-200 text-yellow-800 text-sm font-semibold flex items-center gap-2";
+                statusBox.innerHTML = '<i class="fa-solid fa-circle-info"></i> Please complete all answer boxes before submitting!';
+                return;
+            }
+
+            const correctA = userA === q1Data.intercept;
+            const correctB = userB === q1Data.gradient;
+
+            if (correctA && correctB) {
+                statusBox.className = "p-4 rounded-xl border bg-emerald-50 border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center gap-2";
+                statusBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Brilliant work! Both interpretations are mathematically and contextually correct.';
+            } else {
+                statusBox.className = "p-4 rounded-xl border bg-rose-50 border-rose-200 text-rose-800 text-sm font-semibold flex flex-col gap-1";
+                let msg = '<span class="font-bold flex items-center gap-2"><i class="fa-solid fa-circle-xmark"></i> Some answers require adjustment:</span><ul class="list-disc pl-5 text-xs space-y-1 mt-1">';
+                if (!correctA) msg += `<li>Your brand new vehicle value is incorrect. It should be the intercept constant (when $x = 0$), which is £${q1Data.intercept.toLocaleString()}.</li>`;
+                if (!correctB) msg += `<li>Your rate of decrease is incorrect. It should be the positive absolute value of the gradient: £${q1Data.gradient.toLocaleString()}.</li>`;
+                msg += '</ul>';
+                statusBox.innerHTML = msg;
+                document.getElementById("q1-solution").classList.remove("hidden");
+            }
+            refreshMath();
+        }
+
+        function revealQ1Solution() {
+            document.getElementById("q1-solution").classList.remove("hidden");
+            refreshMath();
+        }
+
+        /* ===== EXAMPLE 2 ===== */
+        function generateQ2() {
+            q2Data.tempLow     = randomInt(4, 8);
+            q2Data.tempHigh    = randomInt(18, 23);
+            q2Data.intercept   = parseFloat((-(randomInt(10, 30) / 10)).toFixed(1)); // always negative
+            q2Data.gradient    = parseFloat((randomInt(35, 75) / 100).toFixed(2));
+            q2Data.predTemp    = randomInt(q2Data.tempLow + 2, q2Data.tempHigh - 2);
+            // invalidTemp is guaranteed to produce a negative s value because intercept < 0
+            // and gradient * invalidTemp will be small enough
+            q2Data.invalidTemp = randomInt(-1, q2Data.tempLow - 3);
+            q2Data.sunHours    = randomInt(6, 12);
+
+            document.getElementById("q2-temp-low").innerText    = q2Data.tempLow;
+            document.getElementById("q2-temp-high").innerText   = q2Data.tempHigh;
+            document.getElementById("q2-equation").innerText    =
+                `s = ${q2Data.intercept} + ${q2Data.gradient}t`;
+            document.getElementById("q2-pred-temp").innerText   = q2Data.predTemp;
+            document.getElementById("q2-invalid-temp").innerText = q2Data.invalidTemp;
+            document.getElementById("q2-sun-hours").innerText   = q2Data.sunHours;
+
+            document.getElementById("q2-ans-a").value = "";
+            ['q2-radio-b','q2-radio-c','q2-radio-d'].forEach(name =>
+                document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.checked = false)
+            );
+            document.getElementById("q2-status").className   = "hidden p-4 rounded-xl border";
+            document.getElementById("q2-solution").classList.add("hidden");
+
+            // Solution — part a
+            const rawA = q2Data.intercept + (q2Data.gradient * q2Data.predTemp);
+            q2Data.targetA = parseFloat(rawA.toFixed(2));
+            document.getElementById("q2-sol-temp-a").innerText  = q2Data.predTemp;
+            const gradTimesTemp = (q2Data.gradient * q2Data.predTemp).toFixed(2);
+            document.getElementById("q2-sol-expr").innerText    =
+                `s = ${q2Data.intercept} + ${q2Data.gradient}(${q2Data.predTemp}) = ${q2Data.intercept} + ${gradTimesTemp} = ${q2Data.targetA} hours`;
+            document.getElementById("q2-sol-temp-b").innerText  = q2Data.predTemp;
+            document.getElementById("q2-sol-low-b").innerText   = q2Data.tempLow;
+            document.getElementById("q2-sol-high-b").innerText  = q2Data.tempHigh;
+
+            // Solution — part c
+            const valC = parseFloat((q2Data.intercept + q2Data.gradient * q2Data.invalidTemp).toFixed(2));
+            document.getElementById("q2-sol-invalid-temp").innerText = q2Data.invalidTemp;
+            document.getElementById("q2-sol-invalid-expr").innerText =
+                `s = ${q2Data.intercept} + ${q2Data.gradient}(${q2Data.invalidTemp}) = ${valC} hours`;
+
+            refreshMath();
+        }
+
+        function checkQ2() {
+            const userA     = parseFloat(document.getElementById("q2-ans-a").value);
+            const radioB    = document.querySelector('input[name="q2-radio-b"]:checked');
+            const radioC    = document.querySelector('input[name="q2-radio-c"]:checked');
+            const radioD    = document.querySelector('input[name="q2-radio-d"]:checked');
+            const statusBox = document.getElementById("q2-status");
+
+            if (isNaN(userA) || !radioB || !radioC || !radioD) {
+                statusBox.className = "p-4 rounded-xl border bg-yellow-50 border-yellow-200 text-yellow-800 text-sm font-semibold flex items-center gap-2";
+                statusBox.innerHTML = '<i class="fa-solid fa-circle-info"></i> Complete all parts (a, b, c, d) before submitting!';
+                return;
+            }
+
+            // FIX: tighter tolerance (0.01) for 2 d.p. answers
+            const correctA = Math.abs(userA - q2Data.targetA) < 0.01;
+            const correctB = radioB.value === "reliable-inter";
+            const correctC = radioC.value === "negative-sun";
+            const correctD = radioD.value === "not-y-on-x";
+
+            if (correctA && correctB && correctC && correctD) {
+                statusBox.className = "p-4 rounded-xl border bg-emerald-50 border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center gap-2";
+                statusBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Perfect score! Excellent mastery of Large Data Set modeling limits.';
+            } else {
+                statusBox.className = "p-4 rounded-xl border bg-rose-50 border-rose-200 text-rose-800 text-sm font-semibold flex flex-col gap-1";
+                let msg = '<span class="font-bold flex items-center gap-2"><i class="fa-solid fa-circle-xmark"></i> Checking completed sections:</span><ul class="list-disc pl-5 text-xs space-y-1 mt-1">';
+                if (!correctA) msg += `<li>Part (a): Your answer should be ${q2Data.targetA} hours (to 2 d.p.).</li>`;
+                if (!correctB) msg += `<li>Part (b): ${q2Data.predTemp}°C lies inside the data range, so this is reliable interpolation.</li>`;
+                if (!correctC) msg += `<li>Part (c): Extrapolating to ${q2Data.invalidTemp}°C gives a physically impossible negative sunshine duration.</li>`;
+                if (!correctD) msg += `<li>Part (d): Rearranging a $s$ on $t$ line to predict $t$ is statistically invalid.</li>`;
+                msg += '</ul>';
+                statusBox.innerHTML = msg;
+                document.getElementById("q2-solution").classList.remove("hidden");
+            }
+            refreshMath();
+        }
+
+        function revealQ2Solution() {
+            document.getElementById("q2-solution").classList.remove("hidden");
+            refreshMath();
+        }
+
+        /* ===== EXAMPLE 3 ===== */
+        function generateQ3() {
+            q3Data.subtractVal    = randomInt(2, 8);
+            q3Data.divideVal      = randomChoice([10, 20, 50, 100]);
+            q3Data.codedIntercept = parseFloat((randomInt(15, 65) / 10).toFixed(1));
+            q3Data.codedGradient  = parseFloat((randomInt(11, 28) / 10).toFixed(1));
+
+            document.getElementById("q3-code-p").innerText  = `p = x − ${q3Data.subtractVal}`;
+            document.getElementById("q3-code-q").innerText  = `q = y ÷ ${q3Data.divideVal}`;
+            document.getElementById("q3-equation").innerText =
+                `q = ${q3Data.codedIntercept} + ${q3Data.codedGradient}p`;
+
+            document.getElementById("q3-ans-a").value = "";
+            document.getElementById("q3-ans-b").value = "";
+            document.getElementById("q3-status").className = "hidden p-4 rounded-xl border";
+            document.getElementById("q3-solution").classList.add("hidden");
+
+            // Calculate exact solution values
+            const factorInt  = parseFloat((q3Data.divideVal * q3Data.codedIntercept).toFixed(4));
+            const factorGrad = parseFloat((q3Data.divideVal * q3Data.codedGradient).toFixed(4));
+            const expansion  = parseFloat((factorGrad * q3Data.subtractVal).toFixed(4));
+            q3Data.targetB   = parseFloat(factorGrad.toFixed(1));
+            q3Data.targetA   = parseFloat((factorInt - expansion).toFixed(1));
+
+            // Update dynamic class spans
+            document.querySelectorAll(".q3-div-val").forEach(el => el.innerText = q3Data.divideVal);
+            document.querySelectorAll(".q3-sub-val").forEach(el => el.innerText = q3Data.subtractVal);
+
+            // Populate solution steps
+            document.getElementById("q3-sol-step1").innerText =
+                `y / ${q3Data.divideVal} = ${q3Data.codedIntercept} + ${q3Data.codedGradient}(x − ${q3Data.subtractVal})`;
+            document.getElementById("q3-sol-step2").innerText =
+                `y = ${q3Data.divideVal} × [ ${q3Data.codedIntercept} + ${q3Data.codedGradient}(x − ${q3Data.subtractVal}) ]`;
+
+            // FIX: fully dynamic product note (was hardcoded "108" and "42")
+            document.getElementById("q3-sol-prod-note").innerText =
+                `Evaluating products: ${q3Data.divideVal} × ${q3Data.codedIntercept} = ${factorInt.toFixed(1)} and ${q3Data.divideVal} × ${q3Data.codedGradient} = ${factorGrad.toFixed(1)}.`;
+
+            document.getElementById("q3-sol-step3").innerText =
+                `y = ${factorInt.toFixed(1)} + ${factorGrad.toFixed(1)}(x − ${q3Data.subtractVal})`;
+            document.getElementById("q3-sol-step4").innerText =
+                `y = ${factorInt.toFixed(1)} + ${factorGrad.toFixed(1)}x − ${expansion.toFixed(1)}`;
+
+            // FIX: fully dynamic combining-constants note (was hardcoded "108 − 168 = −60")
+            document.getElementById("q3-sol-combine-note").innerText =
+                `Combine constant integers (${factorInt.toFixed(1)} − ${expansion.toFixed(1)} = ${q3Data.targetA.toFixed(1)}):`;
+
+            document.getElementById("q3-sol-final").innerText =
+                `y = ${q3Data.targetA} + ${q3Data.targetB}x`;
+
+            refreshMath();
+        }
+
+        function checkQ3() {
+            const userA     = parseFloat(document.getElementById("q3-ans-a").value);
+            const userB     = parseFloat(document.getElementById("q3-ans-b").value);
+            const statusBox = document.getElementById("q3-status");
+
+            if (isNaN(userA) || isNaN(userB)) {
+                statusBox.className = "p-4 rounded-xl border bg-yellow-50 border-yellow-200 text-yellow-800 text-sm font-semibold flex items-center gap-2";
+                statusBox.innerHTML = '<i class="fa-solid fa-circle-info"></i> Please complete both algebraic output fields!';
+                return;
+            }
+
+            const correctA = Math.abs(userA - q3Data.targetA) < 0.15;
+            const correctB = Math.abs(userB - q3Data.targetB) < 0.15;
+
+            if (correctA && correctB) {
+                statusBox.className = "p-4 rounded-xl border bg-emerald-50 border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center gap-2";
+                statusBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Magnificent! Your variables have been decoded successfully.';
+            } else {
+                statusBox.className = "p-4 rounded-xl border bg-rose-50 border-rose-200 text-rose-800 text-sm font-semibold flex flex-col gap-1";
+                let msg = '<span class="font-bold flex items-center gap-2"><i class="fa-solid fa-circle-xmark"></i> Code extraction errors found:</span><ul class="list-disc pl-5 text-xs space-y-1 mt-1">';
+                if (!correctA) msg += `<li>Your constant term ($a$) should be ${q3Data.targetA}. Check how you expand and collect the constant parts after multiplying by ${q3Data.divideVal}.</li>`;
+                if (!correctB) msg += `<li>Your gradient ($b$) should be ${q3Data.targetB}. Multiply the coded gradient by the scale factor ${q3Data.divideVal}.</li>`;
+                msg += '</ul>';
+                statusBox.innerHTML = msg;
+                document.getElementById("q3-solution").classList.remove("hidden");
+            }
+            refreshMath();
+        }
+
+        function revealQ3Solution() {
+            document.getElementById("q3-solution").classList.remove("hidden");
+            refreshMath();
+        }
+
+        /* ===== EXAMPLE 4 ===== */
+        function generateQ4() {
+            q4Data.lowRange  = randomInt(12, 22);
+            q4Data.highRange = randomInt(38, 55);
+            q4Data.intercept = randomInt(55, 95) * 10;
+            q4Data.gradient  = randomInt(4, 15);
+            q4Data.predVal   = randomInt(q4Data.lowRange + 3, q4Data.highRange - 3);
+
+            document.getElementById("q4-low-range").innerText     = q4Data.lowRange;
+            document.getElementById("q4-high-range").innerText    = q4Data.highRange;
+            document.getElementById("q4-low-range-sub").innerText = q4Data.lowRange;
+            document.getElementById("q4-high-range-sub").innerText = q4Data.highRange;
+            document.getElementById("q4-equation").innerText      =
+                `y = ${q4Data.intercept} − ${q4Data.gradient}x`;
+            document.getElementById("q4-pred-val").innerText      = q4Data.predVal;
+            document.getElementById("q4-grad-coeff").innerText    = `−${q4Data.gradient}`;
+            document.getElementById("q4-grad-abs-1").innerText    = q4Data.gradient;
+            document.getElementById("q4-grad-abs-2").innerText    = q4Data.gradient;
+            document.getElementById("q4-intercept-val").innerText = q4Data.intercept;
+
+            document.getElementById("q4-ans-a").value = "";
+            ['q4-radio-b','q4-radio-c'].forEach(name =>
+                document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.checked = false)
+            );
+            document.getElementById("q4-status").className   = "hidden p-4 rounded-xl border";
+            document.getElementById("q4-solution").classList.add("hidden");
+
+            q4Data.targetA = q4Data.intercept - (q4Data.gradient * q4Data.predVal);
+
+            document.getElementById("q4-sol-pred-x").innerText  = q4Data.predVal;
+            document.getElementById("q4-sol-expr").innerText    =
+                `y = ${q4Data.intercept} − ${q4Data.gradient}(${q4Data.predVal}) = ${q4Data.intercept} − ${q4Data.gradient * q4Data.predVal} = ${q4Data.targetA} members`;
+            document.getElementById("q4-sol-grad-abs").innerText = q4Data.gradient;
+            document.getElementById("q4-sol-grad-sub").innerText = q4Data.gradient;
+            document.getElementById("q4-sol-low").innerText      = q4Data.lowRange;
+            refreshMath();
+        }
+
+        function checkQ4() {
+            const userA     = parseInt(document.getElementById("q4-ans-a").value);
+            const radioB    = document.querySelector('input[name="q4-radio-b"]:checked');
+            const radioC    = document.querySelector('input[name="q4-radio-c"]:checked');
+            const statusBox = document.getElementById("q4-status");
+
+            if (isNaN(userA) || !radioB || !radioC) {
+                statusBox.className = "p-4 rounded-xl border bg-yellow-50 border-yellow-200 text-yellow-800 text-sm font-semibold flex items-center gap-2";
+                statusBox.innerHTML = '<i class="fa-solid fa-circle-info"></i> Complete all parts (a, b, c) before submitting!';
+                return;
+            }
+
+            const correctA = userA === q4Data.targetA;
+            const correctB = radioB.value === "grad-correct";
+            const correctC = radioC.value === "intercept-correct";
+
+            if (correctA && correctB && correctC) {
+                statusBox.className = "p-4 rounded-xl border bg-emerald-50 border-emerald-200 text-emerald-800 text-sm font-semibold flex items-center gap-2";
+                statusBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Phenomenal score! Excellent understanding of intercept validity boundaries.';
+            } else {
+                statusBox.className = "p-4 rounded-xl border bg-rose-50 border-rose-200 text-rose-800 text-sm font-semibold flex flex-col gap-1";
+                let msg = '<span class="font-bold flex items-center gap-2"><i class="fa-solid fa-circle-xmark"></i> Section corrections needed:</span><ul class="list-disc pl-5 text-xs space-y-1 mt-1">';
+                if (!correctA) msg += `<li>Part (a): The predicted membership should be ${q4Data.targetA}.</li>`;
+                if (!correctB) msg += `<li>Part (b): The gradient represents a drop of ${q4Data.gradient} members per £1 increase in price.</li>`;
+                if (!correctC) msg += `<li>Part (c): $x = 0$ is outside the tested data range, making the intercept an unreliable extrapolation.</li>`;
+                msg += '</ul>';
+                statusBox.innerHTML = msg;
+                document.getElementById("q4-solution").classList.remove("hidden");
+            }
+            refreshMath();
+        }
+
+        function revealQ4Solution() {
+            document.getElementById("q4-solution").classList.remove("hidden");
+            refreshMath();
+        }
+
+        // Initialise on load
+        window.onload = function () {
+            generateQ1();
+            generateQ2();
+            generateQ3();
+            generateQ4();
+        };
+    </script>
 </body>
 </html>
